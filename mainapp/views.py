@@ -309,9 +309,9 @@ def dashboardPageView(request):
     male = True
     obj = get_object_or_404(UserInfo, pk = UserInfo.objects.get(user = request.user.id).id)
     try:
-        connection = psycopg2.connect(DATABASES = {
-    "default": dj_database_url.config(default=DATABASE_URL, conn_max_age=1800),
-})
+        connection = psycopg2.connect(
+    "default": dj_database_url.config(default=DATABASE_URL, conn_max_age=1800)
+)
         cursor = connection.cursor()
         postgreSQL_select_Query = f"select * from actuals inner join userinfo on userinfo.id = actuals.\"UserID_id\" where userinfo.id = {obj.id}"
 
