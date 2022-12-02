@@ -2,21 +2,20 @@
 {% load static %}
 {% block content %}
 
-<div class= 'main-margins'>
-    <body>
-        <div class = 'main-margins'>
-            <br><br>
-            <h1>Register</h1>
-            
-            <form method="post" action="">
-                {% csrf_token %}
-                {{ form.as_p }}
 
-                <a class="current" href="{% url 'login' %}">Already Have an Account? Login Here</a>
-                <input type="submit" value="Register"/>
-            </form>
-            <br><br><br><br>
-        </div>
-    </body>
-</div>
+<body>
+    <div class = 'main-margins'>
+        <br><br>
+        <h1>Register</h1>
+        
+        <form method="post" action="">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <a class="current" href="{% url 'login' %}">Already Have an Account? Login Here</a>
+            <input type="submit" value="Register"/>
+        </form>
+        <br><br><br><br>
+    </div>
+</body>
 {% endblock %}
