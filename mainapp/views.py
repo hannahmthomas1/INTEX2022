@@ -292,7 +292,7 @@ def createuserPageView(request) :
 def login_redirect(request) :
     try:
         if UserInfo.objects.get(user = request.user.id) :
-            return HttpResponseRedirect('/journal/')
+            return HttpResponseRedirect('/dashboard/')
     except:
         return HttpResponseRedirect('/createuser/')
 
