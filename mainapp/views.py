@@ -115,12 +115,20 @@ def editWaterEntry(request, id):
     return render(request, 'editwaterentry.html', context)
 
 def submitWaterChanges(request, id):
+    currentUser = UserInfo.objects.get(user=request.user.id).id
+    actuals = Actuals.objects.get(UserID=currentUser)
     entry = WaterEntry.objects.get(id=id)
+
+    actuals.Water_L -= Decimal(entry.Amount)
+    actuals.save()
 
     if request.method == 'POST':
         entry.DateTime = request.POST['EntryDate']
         entry.Amount = request.POST['amount']
         entry.save()
+
+        actuals.Water_L += Decimal(entry.Amount)
+        actuals.save()
 
     return redirect(displayjournalPageView)
     
@@ -162,18 +170,34 @@ def editFoodEntry(request, id):
 
 def foodChanges(request, id):
     entry = FoodEntry.objects.get(id=id)
+    foodInfo = FoodItem.objects.get(id=entry.FoodID.id)
+    currentUser = UserInfo.objects.get(user=request.user.id).id
+    actuals = Actuals.objects.get(UserID=currentUser)
+
+    actuals.Protein_g -= foodInfo.Protein_g * Decimal(entry.NumServings)
+    actuals.Phosphorous_mg -= foodInfo.Phosphate_mg * Decimal(entry.NumServings)
+    actuals.Potassium_mg -= foodInfo.Potassium_mg * Decimal(entry.NumServings)
+    actuals.Sodium_mg -= foodInfo.Sodium_mg * Decimal(entry.NumServings)
+    actuals.save()
 
     if request.method == 'POST':
         date = request.POST['EntryDate']
         meal = request.POST['meal']
         food = request.POST['foodID']
         servings = request.POST['servings']
+        foodInfo = FoodItem.objects.get(id=food)
 
         entry.DateTime = date
         entry.MealName = MealClass.objects.get(MealName=meal)
         entry.FoodID = FoodItem.objects.get(id=food)
         entry.NumServings = servings
         entry.save()
+
+        actuals.Protein_g += foodInfo.Protein_g * Decimal(servings)
+        actuals.Phosphorous_mg += foodInfo.Phosphate_mg * Decimal(servings)
+        actuals.Potassium_mg += foodInfo.Potassium_mg * Decimal(servings)
+        actuals.Sodium_mg += foodInfo.Sodium_mg * Decimal(servings)
+        actuals.save()
 
     return redirect(displayjournalPageView)
 
