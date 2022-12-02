@@ -1,0 +1,16 @@
+<script>
+    function setVal(food, id){
+        console.log(id);
+        document.getElementById('foodID').value = id;
+        document.getElementById('searchfood').value = food;
+        document.getElementById('foodList').style.display = 'none';
+    }
+
+    
+</script>
+
+<ul id="foodList">
+    {% for i in foods %}
+        <a onClick='setVal("{{i.name}}", {{i.id}});'><li>{{i.name}}</li></a>
+    {% endfor %}
+</ul>

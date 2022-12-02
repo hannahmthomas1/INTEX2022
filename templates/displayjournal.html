@@ -1,0 +1,109 @@
+{% extends 'nav.html' %}
+{% load static %}
+{% block content %}
+
+<div class="main-margins">
+   
+    
+    {% comment %} CRUD food table {% endcomment %}
+    <div>
+        <h1>Food Entries</h1>
+        <table>
+            <thead>
+                <tr>
+                    {% for key in food|first %}
+                    {% if key == 'MealName_id'%}
+                        <th>Meal</th>
+                    {% elif key == 'FoodID_id' %}
+                        <th>Food</th>
+                    {% elif key == 'NumServings' %}
+                        <th>Servings</th>
+                    {% elif key != 'id' and key != 'UserID_id' %}
+                        <th>{{key}}</th>
+                    {% endif %}
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in food %}
+                <tr>
+                    {% for key,value in row.items %}
+                    {% if key != 'id' and key != 'UserID_id' %}
+                        <td>{{ value }}</td>
+                    {% endif %}
+                    {% endfor %}
+                    <td>
+                        <form method = "post" action="/editfood/{{ row.id }}/">
+                            {% csrf_token %}
+                            <input type="submit" value="Edit" class="edit-delete"></input>
+                        </form>
+                    </td>
+                    <td>
+                        <form method = "post" action="/deletefood/{{ row.id }}/">
+                            {% csrf_token %}
+                            <input type="submit" value="Delete" class="edit-delete"></input>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody> 
+        </table>
+        
+    </div>
+    <br>
+    {% comment %} add food button {% endcomment %}
+    <form action="../journal" class = "entrybutton">
+        <input type="submit" value="Add Food Entry" />
+    </form>
+    <br>
+
+    {% comment %} CRUD water table {% endcomment %}
+    <div>
+        <h1>Water Entries</h1>
+        <table>
+            <thead>
+                <tr>
+                    {% for key in water|first %}
+                    {% if key != 'id' and key != 'UserID_id' and key != 'DateTime' %}
+                        <th>{{key}}</th>
+                    {% endif %}
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in water %}
+                <tr>
+                    {% for key,val in row.items %}
+                        {% if key == 'Amount' %}
+                            <td>{{ val }}L</td>
+                        {% elif key != 'id' and key != 'UserID_id' and key != 'DateTime'%}
+                            <td>{{ val }}</td>
+                        {% endif %}
+                    {% endfor %}
+                    <td>
+                        <form method = "post" action="/editwater/{{ row.id }}/">
+                            {% csrf_token %}
+                            <input type="submit" value="Edit" ></input>
+                        </form>
+                    </td>
+                    <td>
+                        <form method = "post" action="/deletewater/{{ row.id }}/">
+                            {% csrf_token %}
+                            <input type="submit" value="Delete" ></input>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <br>
+    {% comment %} add water button {% endcomment %}
+    <form action="/addwater/" class = 'entrybutton'>
+        <input type="submit" value="Add Water Entry"  />
+    </form>
+
+</div>
+
+
+{% endblock %}

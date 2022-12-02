@@ -1,0 +1,20 @@
+{% extends 'nav.html' %}
+{% load static %}
+{% block content %}
+<script>
+    function setID(){
+        document.getElementById('id').value = sessionStorage.getItem('userid');
+        console.log(document.getElementById('id').value);
+    }
+</script>
+<div class= 'main-margins'>
+    <form method="post" action="/submitwater/">
+        {% csrf_token %}
+        <input type="hidden" id="id" name="userid"/>
+        Date: <input type="date" name="EntryDate"/><br/>
+        Amount (L): <input type="number" name="amount" step=".1" min="0" max="10"/><br/>
+        <input type="submit" onClick="setID()"/>
+    </form>
+</div>
+
+{% endblock %}

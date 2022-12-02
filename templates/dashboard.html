@@ -1,0 +1,206 @@
+
+{% extends 'nav.html'%}
+ 
+{% block title %} Dashboard {% endblock %}
+{% block content %}
+<div>
+    <div>
+        <div class='main-margins'>
+            
+                
+            <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+            
+            <h1>Nutrient Goals</h1>
+            <div class='chartscontainer'>
+                <div class='charts'>
+                    <canvas id="myChart" width="40" height="30" ></canvas>
+                </div>
+                <div class='charts'>
+                    <canvas id="yChart" width="40" height="30" ></canvas>
+                </div>
+            </div>
+            <br>
+            <h1>Your Nutrients</h1>
+            <div class='chartscontainer'>
+                <div class='charts'>    
+                    <canvas id="aChart" width="40" height="30" ></canvas>
+                </div>
+                <div class='charts'>
+                    <canvas id="pChart" width="40" height="30" ></canvas>
+                </div>
+            </div>
+            
+            <script>
+                const ctx = document.getElementById('myChart').getContext('2d');
+                const myChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data:  {
+                        labels:  ['Sodium (mg)', 'Potassium (mg)', 'Phosphorous (mg)'],
+                        datasets: [{
+                            label: 'Daily Nutrient Goals',
+                            data: [1495, 2500, 800],
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                });
+            </script>
+        
+            <script>
+                const ct = document.getElementById('yChart').getContext('2d');
+                const yChart = new Chart(ct, {
+                    type: 'bar',
+                    data:  {
+                        labels:  ['Protein (g)', 'Water'],
+                        datasets: [{
+                            label: '',
+                            data: [0.6, 3.7, 2.7],
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            </script>
+        
+            <script>
+                const cta = document.getElementById('aChart').getContext('2d');
+                const aChart = new Chart(cta, {
+                    type: 'doughnut',
+                    data:  {
+                        labels:  [{% for x in keys %} '{{x}}', {%endfor%}],
+                        datasets: [{
+                            label: 'Your nutrient results (mg)',
+                            data: [{% for y in values %} {{y}}, {%endfor%}],
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            borderWidth: 1
+                        }],
+                    },
+                });
+            </script>
+        
+            <script>
+                const ctp = document.getElementById('pChart').getContext('2d');
+                const pChart = new Chart(ctp, {
+                    type: 'bar',
+                    data:  {
+                        labels:  [{% for x in pkeys %} '{{x}}', {%endfor%}],
+                        datasets: [{
+                            label: 'Your water and protein results',
+                            data: [{% for y in pvals %} {{y}}, {%endfor%}],
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            borderWidth: 1
+                        }],
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            </script>
+           
+            
+            <div class="alerts">
+                {% if Sodium > 2300 %}
+                <p>Alert: your sodium levels are higher than your health goal.</p>
+                <p>Eating fresh food instead of preserved or fast food, will decrease your sodium levels.</p>
+                {% endif%}
+                {% if Protein > 0.6 %}
+                <p>Alert: your protein levels are higher than your health goal.</p>
+                <p>Eating too much protien will make your kidneys work harder than they should. We suggest eating smaller portions of protein-based foods such as Chicken, Fish, Meat, Eggs, Dairy, Beans, Nuts, and Grains.</p>
+                {% endif%}
+                {% if Phosphorus > 1000 %}
+                <p>Alert: your phosphorus levels are higher than your health goal.</p>
+                <p>In the future, we suggest you replace dairy milk with rice milk to lower your Phosphorus levels.</p>
+                {% endif%}
+                {% if Potasium > 3000 %}
+                <p>Alert: your potasium levels are higher than your health goal.</p>Choose apples or peaches instead of oranges, bananas or orange juice to lower your potassium intake.</p>
+                {% endif%}
+                {% if male%}
+                    {%elif Water >= 3.7%}
+                    <p>You have exceeded your water Goal</p>
+                {%endif%}
+                {%if male == False%}
+                    {%elif water >= 2.7%}
+                    <p>You have exceeded your water Goal</p>
+                {%endif%}
+            </div> 
+        </div>    
+    </div> 
+     
+</div>
+
+
+
+
+
+{% endblock %}

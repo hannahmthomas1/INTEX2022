@@ -1,0 +1,39 @@
+{% extends 'nav.html' %}
+{% load static %}
+{% block content %}
+
+<div class='main-margins'>
+<script>
+    function setUser(){
+        document.getElementById('userID').value = sessionStorage.getItem('userid');
+        console.log(document.getElementById('userID').value);
+    }
+</script>
+
+    <body onLoad="setUser()">
+        <div style="width: 40%; margin-left: 20%" >
+            <form method="post" action="/addentry/">
+                {% csrf_token %}
+                Date: <input type="date" name="EntryDate"/><br/>
+                Meal: <select name="meal" id="mealClass">
+                    {% for i in meals %}
+                        <option value="{{i}}">{{i}}</option>
+                    {% endfor %}
+                </select><br/>
+                <input type='hidden' id='foodID' name="foodID"/>
+                <input type='hidden' id='userID' name="userID"/>
+                Food Item: <input type="search" name="food" id="searchfood" hx-get="searchfood/" hx-trigger="keyup" hx-target="#results"/><br/>
+                <div id='results'></div>
+                <a href="/addfood/">Add New Food Item</a><br/>
+                Number of Servings: <input type='number' name="servings" min="0" max="10" step=".1"/>
+                <input type="submit"/>
+                
+            </form>
+        </div>
+        <div>
+
+        </div>
+    </body>
+</div>
+{% endblock %}
+

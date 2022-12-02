@@ -1,0 +1,25 @@
+{% extends 'basicnav.html' %}
+{% load static %}
+{% block content %}
+
+<body>
+    <div class= 'main-margins'>
+        <h1>Create User</h1>
+        
+        {% if submitted %}
+        Your User has been added Successfully!
+        
+        {% else %}
+
+        <form method="POST" action="">
+            {% csrf_token %}
+            {{ form.as_p }}
+        
+            <input type="submit" value="Submit" class="btn btn-success">
+            
+        </form>
+
+        {% endif %}
+    </div>   
+</body>
+{% endblock %}

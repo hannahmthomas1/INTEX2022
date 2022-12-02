@@ -1,0 +1,26 @@
+{% extends 'nav.html' %}
+{% load static %}
+{% block content %}
+
+<div class= 'main-margins'>
+    <div style="width: 40%; margin-left: 20%" >
+        <form method="post" action="/foodchanges/{{entry.id}}/">
+            {% csrf_token %}
+            Date: <input type="date" name="EntryDate" value="{{entry.DateTime}}"/><br/>
+            Meal: <select name="meal" id="mealClass">
+                {% for i in meals %}
+                    <option value="{{i}}">{{i}}</option>
+                {% endfor %}
+            </select><br/>
+            <input type='hidden' id='foodID' name="foodID" value="{{entry.FoodID.id}}"/>
+            <input type='hidden' id='userID' name="userID"/>
+            Food Item: <input type="search" name="food" value="{{entry.FoodID.FoodName}}" id="searchfood" hx-get="/journal/searchfood/" hx-trigger="keyup" hx-target="#newresults"/><br/>
+            <div id='newresults'></div>
+            <a href="/addfood/">Add New Food Item</a><br/>
+            Number of Servings: <input type='number' name="servings" value="{{entry.NumServings}}" min="0" max="10" step=".1"/>
+            <input type="submit"/>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

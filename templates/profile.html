@@ -1,0 +1,33 @@
+{% extends 'nav.html' %}
+{% load static %}
+{% block content %}
+
+{% comment %} <div class="main-margins">
+    <h1>Profile</h1>
+
+    <p>Name: </p>
+    <p>Gender: </p>
+    <p>Birthdate: </p>
+    <p>Height: </p>
+    <p>Weight: </p>  
+
+
+</div> {% endcomment %}
+
+
+<body>
+    <div class = 'main-margins'>
+        <br><br>
+        <h1>Profile</h1>
+        
+        <form method="post" action="/updateprofile">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <input type="submit" value="Update"/>
+        </form>
+        <br><br><br><br>
+    </div>
+</body>
+
+{% endblock %}

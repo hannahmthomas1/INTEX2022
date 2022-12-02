@@ -1,0 +1,21 @@
+{% extends 'basicnav.html' %}
+{% load static %}
+{% block content %}
+
+<body>
+
+    <div class = 'main-margins'>
+        <br><br>
+        <h1>Login</h1>
+
+        
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p}}
+
+            <a class="current" href="{% url 'register' %}">Don't Have an Account? Create New Acccount</a>
+            <input type="submit" value="Login"/>
+        </form>
+    </div>
+</body>
+{% endblock %}
