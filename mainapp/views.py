@@ -192,8 +192,8 @@ def journalPageView(request) :
 def displayjournalPageView(request) :
     print(request.user)
     currentUser = UserInfo.objects.get(user=request.user.id).id
-    waterEntries = WaterEntry.objects.all().values()
-    foodEntries = FoodEntry.objects.all().values()
+    waterEntries = WaterEntry.objects.filter(UserID=currentUser).values()
+    foodEntries = FoodEntry.objects.filter(UserID=currentUser).values()
     food = []
     for i in foodEntries:
         rec = {}
@@ -308,12 +308,7 @@ def dashboardPageView(request):
     values = []
     male = True
     obj = get_object_or_404(UserInfo, pk = UserInfo.objects.get(user = request.user.id).id)
-    
-    # user='postgres',
-    #                                 password='nacho',
-    #                                 host='localhost',
-    #                                 port='5050',
-    #                                 database='kidney_health'
+ 
     try:
         connection = psycopg2.connect(user='postgres',
                                     password='0SFLF5bELJKahjTdUaba',
